@@ -488,6 +488,7 @@ function initializeSpeechRecognition() {
                         if (chatInput.value.trim()) {
                             sendMessage();
                             hideVoiceTranscriptionPopup();
+                            hideInlineVoiceIndicator();
                             longPressStarted = false;
                         }
                     }, 500);
@@ -687,6 +688,7 @@ function stopLongPressTimer() {
         recognition.stop();
         longPressStarted = false;
         hideVoiceTranscriptionPopup();
+        hideInlineVoiceIndicator();
         resetSamButtonAfterVoice();
     }
 }
@@ -700,8 +702,8 @@ function startLongPressVoiceInput() {
     isLongPress = true;
     longPressStarted = true;
     
-    // Show the voice transcription popup
-    showVoiceTranscriptionPopup();
+    // Show the inline voice indicator instead of popup
+    showInlineVoiceIndicator();
     
     // Provide haptic feedback if available
     if (navigator.vibrate) {
@@ -725,7 +727,7 @@ function startLongPressVoiceInput() {
             .catch(function(err) {
                 console.error('Microphone permission error:', err);
                 showNotification('🎤 Please allow microphone access to use voice input', 'warning');
-                hideVoiceTranscriptionPopup();
+                hideInlineVoiceIndicator();
                 resetSamButtonAfterVoice();
             });
     } else {
@@ -733,7 +735,7 @@ function startLongPressVoiceInput() {
             recognition.start();
         } catch (error) {
             showNotification('🚫 Could not start speech recognition: ' + error.message, 'error');
-            hideVoiceTranscriptionPopup();
+            hideInlineVoiceIndicator();
             resetSamButtonAfterVoice();
         }
     }
@@ -1031,6 +1033,7 @@ function hideVoiceTranscriptionPopup() {
 
 function updateTranscriptionText(text, isFinal = false) {
     const transcriptionText = document.getElementById('transcriptionText');
+    const inlineTranscriptionText = document.getElementById('inlineTranscriptionText');
     
     if (transcriptionText) {
         transcriptionText.textContent = text || 'Say something...';
@@ -1040,6 +1043,55 @@ function updateTranscriptionText(text, isFinal = false) {
         } else if (text) {
             transcriptionText.classList.remove('active');
         }
+    }
+    
+    // Also update inline indicator if active
+    if (inlineTranscriptionText) {
+        inlineTranscriptionText.textContent = text || 'Say something...';
+        const transcriptionBox = inlineTranscriptionText.parentElement;
+        
+        if (isFinal) {
+            inlineTranscriptionText.classList.add('active');
+            transcriptionBox.classList.add('active');
+        } else if (text) {
+            inlineTranscriptionText.classList.remove('active');
+            transcriptionBox.classList.remove('active');
+        }
+    }
+}
+
+// Inline Voice Indicator Functions
+function showInlineVoiceIndicator() {
+    const indicator = document.getElementById('inlineVoiceIndicator');
+    const transcriptionText = document.getElementById('inlineTranscriptionText');
+    
+    if (indicator) {
+        transcriptionText.textContent = 'Say something...';
+        transcriptionText.classList.remove('active');
+        const transcriptionBox = transcriptionText.parentElement;
+        transcriptionBox.classList.remove('active');
+        
+        indicator.style.display = 'block';
+        indicator.classList.remove('closing');
+        
+        // Animate in
+        setTimeout(() => {
+            indicator.style.opacity = '1';
+            indicator.style.transform = 'translateY(0) scale(1)';
+        }, 10);
+    }
+}
+
+function hideInlineVoiceIndicator() {
+    const indicator = document.getElementById('inlineVoiceIndicator');
+    
+    if (indicator) {
+        indicator.classList.add('closing');
+        
+        setTimeout(() => {
+            indicator.style.display = 'none';
+            indicator.classList.remove('closing');
+        }, 300);
     }
 }
 

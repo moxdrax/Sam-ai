@@ -1506,6 +1506,126 @@ body {
     animation: popupSlideOut 0.3s ease-in-out;
 }
 
+/* Inline Voice Indicator (near Sam button) */
+.inline-voice-indicator {
+    position: fixed;
+    bottom: 110px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 999;
+    min-width: 280px;
+    max-width: 350px;
+    animation: slideUpIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: bottom right;
+}
+
+.voice-indicator-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.voice-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.voice-icon {
+    font-size: 1.2rem;
+    animation: pulse-recording 1s infinite;
+}
+
+.voice-text {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.9rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.voice-transcription-box {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    border: 2px dashed #e2e8f0;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.voice-transcription-text {
+    font-size: 0.9rem;
+    color: #4a5568;
+    line-height: 1.4;
+    font-style: italic;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.voice-transcription-text.active {
+    color: #2d3748;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.voice-transcription-box.active {
+    background: #edf2f7;
+    border-color: #667eea;
+}
+
+/* Enhanced Sam button states */
+.sam-chat-button.voice-active {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%) !important;
+    box-shadow: 0 0 0 8px rgba(72, 187, 120, 0.3) !important;
+    animation: pulse-voice-active 1.5s infinite !important;
+}
+
+@keyframes pulse-voice-active {
+    0%, 100% {
+        box-shadow: 0 0 0 8px rgba(72, 187, 120, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 0 12px rgba(72, 187, 120, 0.1);
+    }
+}
+
+@keyframes slideUpIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideUpOut {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+}
+
+.inline-voice-indicator.closing {
+    animation: slideUpOut 0.3s ease-in-out;
+}
+
 /* Mobile Responsive */
 @media (max-width: 480px) {
     .sam-chat-widget {
@@ -1541,6 +1661,21 @@ body {
     
     .transcription-status {
         font-size: 1rem;
+    }
+    
+    .inline-voice-indicator {
+        width: calc(100vw - 40px);
+        min-width: auto;
+        right: 10px;
+        bottom: 80px;
+    }
+    
+    .voice-transcription-box {
+        min-height: 40px;
+    }
+    
+    .voice-transcription-text {
+        font-size: 0.85rem;
     }
 }
 
