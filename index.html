@@ -118,12 +118,42 @@
                     <button class="chat-send-btn" id="chatSendBtn">📤</button>
                     <button class="chat-voice-btn" id="chatVoiceBtn">🎤</button>
                 </div>
-                <div class="chat-suggestions">
-                    <button class="suggestion-chip" onclick="sendQuickMessage('Send message to John about the quarterly review')">📧 Send Message</button>
-                    <button class="suggestion-chip" onclick="sendQuickMessage('Generate sales report')">📊 Sales Report</button>
-                    <button class="suggestion-chip" onclick="sendQuickMessage('Assign task to Sarah: Review client proposal')">✅ Assign Task</button>
-                    <button class="suggestion-chip" onclick="sendQuickMessage('Show me team members')">👥 Team Status</button>
-                </div>
+                    <div class="chat-suggestions">
+                        <button class="suggestion-chip" onclick="sendQuickMessage('Send message to John about the quarterly review')">📧 Send Message</button>
+                        <button class="suggestion-chip" onclick="sendQuickMessage('Generate sales report')">📊 Sales Report</button>
+                        <button class="suggestion-chip" onclick="sendQuickMessage('Assign task to Sarah: Review client proposal')">✅ Assign Task</button>
+                        <button class="suggestion-chip" onclick="sendQuickMessage('Show me team members')">👥 Team Status</button>
+                    </div>
+                    <div class="voice-instructions">
+                        <div class="instruction-text">💡 <strong>Tip:</strong> Long press the Sam button for quick voice input!</div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Voice Transcription Popup -->
+    <div id="voiceTranscriptionPopup" class="voice-transcription-popup" style="display: none;">
+        <div class="transcription-header">
+            <div class="transcription-icon">🎤</div>
+            <div class="transcription-status">Listening...</div>
+        </div>
+        <div class="transcription-content">
+            <div class="transcription-text" id="transcriptionText">Say something...</div>
+        </div>
+        <div class="transcription-footer">
+            <div class="release-instruction">Release to send</div>
+        </div>
+    </div>
+
+    <!-- Inline Voice Indicator (near Sam button) -->
+    <div id="inlineVoiceIndicator" class="inline-voice-indicator" style="display: none;">
+        <div class="voice-indicator-content">
+            <div class="voice-status">
+                <span class="voice-icon">🎤</span>
+                <span class="voice-text">Listening</span>
+            </div>
+            <div class="voice-transcription-box">
+                <div class="voice-transcription-text" id="inlineTranscriptionText">Say something...</div>
             </div>
         </div>
     </div>
