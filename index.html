@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3e%3ctext y=%22.9em%22 font-size=%2290%22%3e🤖%3c/text%3e%3c/svg%3e">
+</head>
+<body>
+    <!-- Simulated CRM System -->
+    <div class="crm-system">
+        <!-- CRM Header -->
+        <header class="crm-header">
+            <div class="crm-header-content">
+                <div class="crm-logo">
+                    <h1>🏢 CRM System</h1>
+                </div>
+                <nav class="crm-nav">
+                    <a href="#" class="nav-link active">Dashboard</a>
+                    <a href="#" class="nav-link">Customers</a>
+                    <a href="#" class="nav-link">Sales</a>
+                    <a href="#" class="nav-link">Reports</a>
+                    <a href="#" class="nav-link">Settings</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- CRM Main Content -->
+        <main class="crm-main">
+            <div class="crm-content">
+                <h2>Dashboard</h2>
+                <div class="crm-widgets">
+                    <div class="crm-widget">
+                        <h3>Sales Overview</h3>
+                        <div class="widget-content">
+                            <p>Total Sales: $125,000</p>
+                            <p>This Month: $35,000</p>
+                            <p>Growth: +15%</p>
+                        </div>
+                    </div>
+                    <div class="crm-widget">
+                        <h3>Recent Customers</h3>
+                        <div class="widget-content">
+                            <p>• John Smith - Acme Corp</p>
+                            <p>• Sarah Johnson - Tech Solutions</p>
+                            <p>• Mike Davis - Global Industries</p>
+                        </div>
+                    </div>
+                    <div class="crm-widget">
+                        <h3>Tasks</h3>
+                        <div class="widget-content">
+                            <p>• Follow up with leads</p>
+                            <p>• Prepare quarterly report</p>
+                            <p>• Schedule team meeting</p>
+                        </div>
+                    </div>
+                    <div class="crm-widget">
+                        <h3>Analytics</h3>
+                        <div class="widget-content">
+                            <p>Conversion Rate: 23%</p>
+                            <p>Active Deals: 15</p>
+                            <p>Pipeline Value: $500k</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Sam AI Chat Widget -->
+    <div class="sam-chat-widget" id="samChatWidget">
+        <!-- Chat Button (Always Visible) -->
+        <div class="sam-chat-button" id="samChatButton">
+            <div class="chat-button-icon">Sam</div>
+            <!-- <div class="chat-button-text">Sam</div> -->
+            <div class="notification-dot" id="chatNotificationDot">3</div>
+        </div>
+
+        <!-- Chat Window (Hidden by default) -->
+        <div class="sam-chat-window" id="samChatWindow">
+            <!-- Chat Header -->
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="chat-avatar">🤖</div>
+                    <div class="chat-header-text">
+                        <h3>Sam AI Assistant</h3>
+                        <p>Your CRM AI Helper</p>
+                    </div>
+                </div>
+                <button class="chat-close-btn" id="chatCloseBtn">×</button>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages">
+                <div class="message assistant">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <div class="message-text">
+                            Hi! I'm Sam, your CRM AI assistant. I can help you with:
+                            <br><br>
+                            • Finding customer information
+                            • Creating sales reports
+                            • Managing tasks and follow-ups
+                            • Sending emails to clients
+                            <br><br>
+                            What can I help you with today?
+                        </div>
+                        <div class="message-time">Just now</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-container">
+                <div class="chat-input-wrapper">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask Sam anything about your CRM..." autocomplete="off">
+                    <button class="chat-send-btn" id="chatSendBtn">📤</button>
+                    <button class="chat-voice-btn" id="chatVoiceBtn">🎤</button>
+                </div>
+                <div class="chat-suggestions">
+                    <button class="suggestion-chip" onclick="sendQuickMessage('Send message to John about the quarterly review')">📧 Send Message</button>
+                    <button class="suggestion-chip" onclick="sendQuickMessage('Generate sales report')">📊 Sales Report</button>
+                    <button class="suggestion-chip" onclick="sendQuickMessage('Assign task to Sarah: Review client proposal')">✅ Assign Task</button>
+                    <button class="suggestion-chip" onclick="sendQuickMessage('Show me team members')">👥 Team Status</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notificationToast" class="notification-toast">
+        <div class="toast-content">
+            <div class="toast-icon">🔔</div>
+            <div class="toast-message" id="toastMessage"></div>
+        </div>
+        <button class="toast-close" onclick="closeToast()">×</button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="sam-widget.js"></script>
+</body>
+</html>
+
