@@ -41,14 +41,22 @@ function initializeSamWidget() {
 function toggleChatWidget() {
     const chatWindow = document.getElementById('samChatWindow');
     const notificationDot = document.getElementById('chatNotificationDot');
+    const chatButton = document.getElementById('samChatButton');
+    const chatWidget = document.getElementById('samChatWidget');
     
-    if (isWidgetOpen) {
-        closeChatWidget();
-    } else {
-        openChatWidget();
-        // Clear notifications when opening
-        notificationDot.style.display = 'none';
-    }
+    // Add bouncing ball effect
+    startBouncing(chatButton, chatWidget);
+    
+    // Delay opening chat to show bounce effect
+    setTimeout(() => {
+        if (isWidgetOpen) {
+            closeChatWidget();
+        } else {
+            openChatWidget();
+            // Clear notifications when opening
+            notificationDot.style.display = 'none';
+        }
+    }, 1500); // Wait for bounce animation to complete
 }
 
 function openChatWidget() {
@@ -436,6 +444,93 @@ function closeToast() {
     if (toast) {
         toast.classList.remove('show');
     }
+}
+
+// Bouncing ball physics
+function startBouncing(button, widget) {
+    button.classList.add('bouncing');
+    
+    const container = {
+        width: window.innerWidth,
+        height: window.innerHeight
+    };
+    
+    const ball = {
+        x: widget.offsetLeft,
+        y: widget.offsetTop,
+        vx: (Math.random() - 0.5) * 20, // Random horizontal velocity
+        vy: -15, // Initial upward velocity
+        gravity: 0.8,
+        bounce: 0.7,
+        friction: 0.98
+    };
+    
+    let animationId;
+    let bounceCount = 0;
+    const maxBounces = 8;
+    
+    function animate() {
+        // Apply gravity
+        ball.vy += ball.gravity;
+        
+        // Update position
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        
+        // Apply friction
+        ball.vx *= ball.friction;
+        
+        // Bounce off walls
+        if (ball.x <= 0 || ball.x >= container.width - 80) {
+            ball.vx *= -ball.bounce;
+            ball.x = Math.max(0, Math.min(container.width - 80, ball.x));
+            bounceCount++;
+        }
+        
+        // Bounce off floor and ceiling
+        if (ball.y <= 0 || ball.y >= container.height - 80) {
+            ball.vy *= -ball.bounce;
+            ball.y = Math.max(0, Math.min(container.height - 80, ball.y));
+            bounceCount++;
+            
+            // Add slight random horizontal velocity on floor bounce
+            if (ball.y >= container.height - 80) {
+                ball.vx += (Math.random() - 0.5) * 3;
+            }
+        }
+        
+        // Update widget position
+        widget.style.left = ball.x + 'px';
+        widget.style.top = ball.y + 'px';
+        widget.style.right = 'auto';
+        widget.style.bottom = 'auto';
+        
+        // Continue animation if ball is still moving or bouncing
+        if (bounceCount < maxBounces && (Math.abs(ball.vx) > 0.5 || Math.abs(ball.vy) > 0.5 || ball.y < container.height - 80)) {
+            animationId = requestAnimationFrame(animate);
+        } else {
+            // Stop bouncing and return to original position
+            stopBouncing(button, widget);
+        }
+    }
+    
+    animate();
+}
+
+function stopBouncing(button, widget) {
+    button.classList.remove('bouncing');
+    
+    // Animate back to original position
+    widget.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    widget.style.left = 'auto';
+    widget.style.top = 'auto';
+    widget.style.right = '20px';
+    widget.style.bottom = '20px';
+    
+    // Reset transition after animation
+    setTimeout(() => {
+        widget.style.transition = 'all 0.1s ease-out';
+    }, 500);
 }
 
 // Simulate real-time notifications
